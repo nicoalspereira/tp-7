@@ -1,37 +1,32 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Ejercicio from '../components/Card'
+import Plato from '../components/Plato'
 import { useEffect, useRef, useState } from 'react'
-import data from '../Data/data';
+import data from '../mocks/data';
 
 const Home = () => {
-    const [listaArticulos, setListaArticulos] = useState([])
+    const [listaPlatos, setListaPlatos] = useState([])
 
-    const [articulosActivos, setArticulosActivos] = useState([])
-    const [tema, setTema] = useState(0)
-    const [busqueda, setBusqueda] = useState(null)
+    const [platosFiltrados, setPlatosFiltrados] = useState([])
+    const [busqueda, setBusqueda] = useState('')
 
     const buscarInput = useRef()
 
-    useEffect(() => async() => {
-        console.log(data)
-        setListaArticulos(data)
-        setArticulosActivos(data)
-        setBusqueda('')
+    useEffect(() => {
+        const start = async() => {
+            setListaPlatos(data)
+            setPlatosFiltrados(data)
+        }
+        start()
     }, [])
 
     useEffect(() => { // Filtrar
-        var lista = [...listaArticulos]
-        if (tema) lista = lista.filter(ej => ej.tema === tema)
-        if (busqueda) {
-            lista = lista.filter((ej) => (
-                ej.titulo.toUpperCase().includes(buscarInput.current.value.toUpperCase())
-            ))
-        }
-        setArticulosActivos(lista)
-    }, [busqueda, tema])
-
-    const handleClick = e => setTema(Number(e.target.value))
-    const handleChange = e => setBusqueda(e.target.value)
+        if (!busqueda) return
+        var nuevosPlatos = [...listaPlatos]
+        nuevosPlatos = nuevosPlatos.filter(plato => (
+            plato.titulo.toUpperCase().includes(busqueda.toUpperCase())
+        ))
+        setPlatosFiltrados(nuevosPlatos)
+    }, [busqueda])
 
     return (
         <View>
