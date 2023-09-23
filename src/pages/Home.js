@@ -9,10 +9,8 @@ const Home = () => {
     const [platosFiltrados, setPlatosFiltrados] = useState([])
     const [busqueda, setBusqueda] = useState('')
 
-    const buscarInput = useRef()
-
     useEffect(() => {
-        const start = async() => {
+        const start = async () => {
             setListaPlatos(data)
             setPlatosFiltrados(data)
         }
@@ -36,12 +34,12 @@ const Home = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
 
 export default Home
