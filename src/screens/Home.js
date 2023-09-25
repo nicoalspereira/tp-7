@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View, RefreshControl, TextInput } from 'react-native';
+import { FlatList, StyleSheet, Text, View, RefreshControl, TextInput, ScrollView } from 'react-native';
 import Plato from '../components/Plato'
 import { useEffect, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch';
@@ -41,19 +41,22 @@ const Home = () => {
                 onChangeText={handleChange}
                 value={busqueda}
             />
-            <FlatList
-                refreshControl={
-                    <RefreshControl onRefresh={async () => await buscarPlatos()}
-                        // colors={['lightcoral']}
-                        progressBackgroundColor={'lightblue'}
-                        refreshing={refreshing}
-                    />
-                }
-                contentContainerStyle={styles.listaPlatos}
-                data={platosFiltrados}
-                renderItem={({ item }) => <Plato {...item} />}
-                keyExtractor={item => item.id}
-            />
+            <ScrollView style={{ flex: 1 }}>
+                <FlatList
+                    nestedScrollEnabled={true}
+                    refreshControl={
+                        <RefreshControl onRefresh={async () => await buscarPlatos()}
+                            // colors={['lightcoral']}
+                            progressBackgroundColor={'lightblue'}
+                            refreshing={refreshing}
+                        />
+                    }
+                    contentContainerStyle={styles.listaPlatos}
+                    data={platosFiltrados}
+                    renderItem={({ item }) => <Plato {...item} />}
+                    keyExtractor={item => item.id}
+                />
+            </ScrollView>
         </Layout>
     )
 }
@@ -64,6 +67,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 20,
         width: '100%',
+        height: '100%',
     },
     textInput: {
         height: 40, 
