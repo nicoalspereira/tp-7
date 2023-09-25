@@ -10,7 +10,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='HomeScreen' component={Home}
+        <Stack.Screen name='Home' component={Home}
           options={({navigation}) => ({
             title: "HomeScreen",
             headerStyle: {
@@ -22,7 +22,7 @@ export default function App() {
               </TouchableOpacity>
             )
         })} />
-        <Stack.Screen name='LoginScreen' component={Login}
+        <Stack.Screen name='Login' component={Login}
           options={() => ({
             title: "LoginScreen",
             headerStyle: {
