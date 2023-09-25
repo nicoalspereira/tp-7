@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native';
+import { FlatList, StyleSheet, Text, View, RefreshControl, TextInput } from 'react-native';
 import Plato from '../components/Plato'
 import { useEffect, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch';
@@ -25,14 +25,22 @@ const Home = () => {
         if (!busqueda) return
         var nuevosPlatos = [...listaPlatos]
         nuevosPlatos = nuevosPlatos.filter(plato => (
-            plato.titulo.toUpperCase().includes(busqueda.toUpperCase())
+            plato.title.toUpperCase().includes(busqueda.toUpperCase())
         ))
         setPlatosFiltrados(nuevosPlatos)
     }, [busqueda])
 
+    const handleChange = newBusqueda => setBusqueda(newBusqueda)
+
     return (
         <Layout>
             <Text>Home</Text>
+            <TextInput 
+                placeholder='Buscar plato...'
+                style={styles.textInput}
+                onChangeText={handleChange}
+                value={busqueda}
+            />
             <FlatList
                 refreshControl={
                     <RefreshControl onRefresh={async () => await buscarPlatos()}
@@ -56,6 +64,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 20,
         width: '100%',
+    },
+    textInput: {
+        height: 40, 
+        borderColor: 'gray',
+        borderRadius: 5,
+        borderWidth: 1, 
+        width: '100%', 
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     }
 })
 
