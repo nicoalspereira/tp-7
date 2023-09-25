@@ -12,7 +12,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name='Home' component={Home}
           options={({navigation}) => ({
-            title: "HomeScreen",
+            title: "Home",
             headerStyle: {
               backgroundColor: 'lightcoral'
             },
@@ -24,7 +24,7 @@ export default function App() {
         })} />
         <Stack.Screen name='Login' component={Login}
           options={() => ({
-            title: "LoginScreen",
+            title: "Login",
             headerStyle: {
               backgroundColor: 'lightblue'
             }
