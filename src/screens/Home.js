@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native';
 import Plato from '../components/Plato'
 import { useEffect, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch';
@@ -7,17 +7,19 @@ import Layout from '../components/Layout';
 const Home = () => {
     const [listaPlatos, setListaPlatos] = useState([])
 
+    const [refreshing, setRefreshing] = useState(false)
     const [platosFiltrados, setPlatosFiltrados] = useState([])
     const [busqueda, setBusqueda] = useState('')
 
-    useEffect(() => {
-        const start = async () => {
-            const platos = await useFetch(true)
-            setListaPlatos(platos)
-            setPlatosFiltrados(platos)
-        }
-        start()
-    }, [])
+    const buscarPlatos = async () => {
+        setRefreshing(true)
+        const platos = await useFetch(true)
+        setRefreshing(false)
+        setListaPlatos(platos)
+        setPlatosFiltrados(platos)
+    }
+
+    useEffect(() => { buscarPlatos() }, [])
 
     useEffect(() => { // filtrar platos
         if (!busqueda) return
@@ -32,21 +34,29 @@ const Home = () => {
         <Layout>
             <Text>Home</Text>
             <FlatList
-              data={platosFiltrados}
-              renderItem={({ item }) => <Text>{item.title}</Text>}
-              keyExtractor={item => item.id}
+                refreshControl={
+                    <RefreshControl onRefresh={async () => await buscarPlatos()}
+                        // colors={['lightcoral']}
+                        progressBackgroundColor={'lightblue'}
+                        refreshing={refreshing}
+                    />
+                }
+                contentContainerStyle={styles.listaPlatos}
+                data={platosFiltrados}
+                renderItem={({ item }) => <Plato {...item} />}
+                keyExtractor={item => item.id}
             />
         </Layout>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    listaPlatos: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
-    },
+        gap: 20,
+        width: '100%',
+    }
 })
 
 export default Home
