@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Plato from '../components/Plato'
 import { useEffect, useRef, useState } from 'react'
-import data from '../mocks/data';
+import useFetch from '../hooks/useFetch';
 
 const Home = () => {
     const [listaPlatos, setListaPlatos] = useState([])
@@ -11,13 +11,14 @@ const Home = () => {
 
     useEffect(() => {
         const start = async () => {
-            setListaPlatos(data)
-            setPlatosFiltrados(data)
+            const platos = await useFetch(true)
+            setListaPlatos(platos)
+            setPlatosFiltrados(platos)
         }
         start()
     }, [])
 
-    useEffect(() => { // Filtrar
+    useEffect(() => { // filtrar platos
         if (!busqueda) return
         var nuevosPlatos = [...listaPlatos]
         nuevosPlatos = nuevosPlatos.filter(plato => (
@@ -29,6 +30,11 @@ const Home = () => {
     return (
         <View>
             <Text>Home</Text>
+            <FlatList
+              data={platosFiltrados}
+              renderItem={({ item }) => <Text>{item.title}</Text>}
+              keyExtractor={item => item.id}
+            />
         </View>
     )
 }
