@@ -2,6 +2,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Plato from '../components/Plato'
 import { useEffect, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch';
+import Layout from '../components/Layout';
 
 const Home = () => {
     const [listaPlatos, setListaPlatos] = useState([])
@@ -28,14 +29,14 @@ const Home = () => {
     }, [busqueda])
 
     return (
-        <View>
+        <Layout>
             <Text>Home</Text>
             <FlatList
               data={platosFiltrados}
               renderItem={({ item }) => <Text>{item.title}</Text>}
               keyExtractor={item => item.id}
             />
-        </View>
+        </Layout>
     )
 }
 
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-});
+})
 
 export default Home
 
