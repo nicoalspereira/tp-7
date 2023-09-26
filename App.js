@@ -17,7 +17,7 @@ export default function App() {
               backgroundColor: 'lightcoral'
             },
             headerRight: () => (
-              <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.headerRight}>Ir a Login</Text>
               </TouchableOpacity>
             )
