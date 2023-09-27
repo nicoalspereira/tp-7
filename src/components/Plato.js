@@ -1,17 +1,17 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-export default function Plato({ id, title, image }) {
+export default function Plato({ id, title, image, handlePress }) {
     return (
-        <View style={styles.container}>
-            <Image
-                source={{uri: image}}
-                style={styles.image}
-            />
-            <Text style={styles.title}>{title}</Text>
-        </View>
+        <TouchableOpacity style={styles.container} onPress={handlePress}>
+            {
+                image ? <Image source={{uri: image}} style={styles.image} /> :
+                <Image source={require('/assets/cargando.png')} style={styles.image} />
+            }
+            <Text style={styles.title}>{title || 'Cargando...'}</Text>
+        </TouchableOpacity>
     )
 }
-
+// Cargando
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#8aafeb',

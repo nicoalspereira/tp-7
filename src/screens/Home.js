@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import useFetch from '../hooks/useFetch';
 import Layout from '../components/Layout';
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const [listaPlatos, setListaPlatos] = useState([])
 
     const [refreshing, setRefreshing] = useState(false)
@@ -31,6 +31,10 @@ const Home = () => {
     }, [busqueda])
 
     const handleChange = newBusqueda => setBusqueda(newBusqueda)
+    
+    const handlePress = idPlato => {
+        navigation.navigate('Plato', { idPlato })
+    }
 
     return (
         <Layout>
@@ -53,7 +57,7 @@ const Home = () => {
                     }
                     contentContainerStyle={styles.listaPlatos}
                     data={platosFiltrados}
-                    renderItem={({ item }) => <Plato {...item} />}
+                    renderItem={({ item }) => <Plato {...item} handlePress={() => handlePress(item.id)} />}
                     keyExtractor={item => item.id}
                 />
             </ScrollView>
