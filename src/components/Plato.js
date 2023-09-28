@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
+
 export default function Plato({ id, title, image, handlePress }) {
+    
     return (
         <TouchableOpacity style={styles.container} onPress={handlePress}>
             {
@@ -11,25 +13,44 @@ export default function Plato({ id, title, image, handlePress }) {
         </TouchableOpacity>
     )
 }
-// Cargando
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#8aafeb',
-        borderRadius: 10,
-        borderColor: '#6596e6',
-        borderWidth: 2,
-        gap: 10,
-        width: 350,
+        margin:20,
+        width:400,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        marginBottom: 20,
         flexDirection: 'row',
+        overflow: 'hidden', // Para que los bordes redondeados no muestren contenido fuera
+    },
+    image: { 
+        width: '40%', 
+        height: 150,
+    },
+    content: {
+        flex: 1,
         padding: 10,
     },
     title: {
         fontSize: 20,
-        fontWeight: '600',
+        fontWeight: 'bold',
+        marginBottom: 5,
     },
-    image: { 
-        width: '33%', 
-        height: 100,
-        borderRadius: 10,
-    }
+    description: {
+        fontSize: 16,
+        marginBottom: 10,
+    },
+    price: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'green', // Puedes ajustar el color según sea necesario
+    },
 })
